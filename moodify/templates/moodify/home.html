@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Moodify</title>
+    </head>
+    <body>
+        
+        <h4>Emotion: {{emotion}}</h4>
+        <h3>Recommended Songs:</h3>
+        {{emotion_to_songs.emotion}}
+
+        {% comment %} {{ songs_list }} {% endcomment %}
+
+        {% for song in songs_list %}
+            <a href = "{{song.uri}}">{{song.name}}</a> 
+        {% endfor %}
+
+         {% comment %} {% for key, value in emotion_to_songs.items %}
+        <li>{{ key }} : {{ value }}</li>
+        {% endfor %} {% endcomment %}
+    </body>
+</html>

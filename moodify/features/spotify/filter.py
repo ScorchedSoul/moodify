@@ -27,36 +27,32 @@ high_energy_songs = []
 cheerful_songs = []
 
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scopes))
-top_tracks = sp.current_user_top_tracks(limit=50)
-# genre = 
-# user_id = sp.current_user()["id"]
-# results = sp.current_user_saved_tracks()
+def retrieve_songs():
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scopes))
+    top_tracks = sp.current_user_top_tracks(limit=1)
 
-for idx, item in enumerate(top_tracks['items']):
-    # track = item['track']
-    uri = item['uri']
+    for idx, item in enumerate(top_tracks['items']):
+        uri = item['uri']
+        acousticness = sp.audio_features(uri)[0]['acousticness']
+        energy = sp.audio_features(uri)[0]['energy']
+        danceability = sp.audio_features(uri)[0]['danceability']
+        valence = sp.audio_features(uri)[0]['valence']
+        print(idx, item['uri'], item['name'], [a['name'] for a in item['artists']],danceability)
+        
+        if valence > 0.5:
+            happy_songs.append(item)
+        else:
+            sad_songs.append(item)
+        
+        if energy>0.6:
+            high_energy_songs.append(item)
+        else:
+            calm_songs.append(item)
+        
+        if danceability>0.7:
+            cheerful_songs.append(item)
 
-    
-    acousticness = sp.audio_features(uri)[0]['acousticness']
-    energy = sp.audio_features(uri)[0]['energy']
-    danceability = sp.audio_features(uri)[0]['danceability']
-    valence = sp.audio_features(uri)[0]['valence']
-    print(idx, item['uri'], item['name'], [a['name'] for a in item['artists']],danceability)
-    
-    if valence > 0.5:
-        happy_songs.append(item)
-    else:
-        sad_songs.append(item)
-    
-    if energy>0.6:
-        high_energy_songs.append(item)
-    else:
-        calm_songs.append(item)
-    
-    if danceability>0.7:
-        cheerful_songs.append(item)
-
+retrieve_songs()
 
 print("LIST OF HAPPY SONGS")
 for item in happy_songs:

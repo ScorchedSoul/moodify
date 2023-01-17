@@ -5,7 +5,6 @@ import os
 
 load_dotenv()
 
-# print(os.environ['SPOTIPY_CLIENT_ID'])
 
 scopes = ["user-library-read","user-top-read"]
 # sp = spotipy.Spotify(
@@ -30,7 +29,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scopes))
 
 
 def retrieve_songs():
-    top_tracks = sp.current_user_top_tracks(limit=50)
+    top_tracks = sp.current_user_top_tracks(limit=20)
 
     for idx, item in enumerate(top_tracks['items']):
         uri = item['uri']
@@ -70,7 +69,6 @@ print("LIST OF HAPPY SONGS")
 happy_songs = sorted(happy_songs, key=lambda k: k["valence"])
 happy_songs.reverse()
 for item in happy_songs:
-    # print(item)
     print(f"Song: {item['name']}, Artists: {[a['name'] for a in item['artists']]} , {item['valence']} ")
 
 

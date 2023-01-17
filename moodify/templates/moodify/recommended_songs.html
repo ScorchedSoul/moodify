@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Songs
+{% endblock title %}
+
+{% block content %}
+    <h1>Listen to your Favourite songs according to your mood</h1>
+    <ul>
+        {% for song in songs_list %}
+        <li>
+            <h3>Song : <a href = "{{song.uri}}">{{song.name}}</a></h3> 
+            <h4>Artist: </h4>
+            {% for artist in song.artists%}
+                <h5>{{artist.name}}</h5>
+            {% endfor %}
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

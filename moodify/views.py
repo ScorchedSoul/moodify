@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .features.spotify.filter import happy_songs,sad_songs,high_energy_songs,calm_songs,cheerful_songs
 # Create your views here.
 
-emotion = "sad"
+emotion = "happy"
 
 
 emotion_to_songs = {
@@ -10,7 +10,9 @@ emotion_to_songs = {
     "sad" : sad_songs,
     "angry" : calm_songs,
     "fear" : cheerful_songs,
-    "party" : high_energy_songs
+    "surprise" : high_energy_songs,
+    "neutral" : None,
+    "disgust" : None
 }
 
 def home(request):

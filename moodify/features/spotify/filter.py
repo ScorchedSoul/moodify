@@ -31,7 +31,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scopes))
 
 
 def retrieve_songs():
-    top_tracks = sp.current_user_top_tracks(limit=20)
+    top_tracks = sp.current_user_top_tracks(limit=2)
 
     for idx, item in enumerate(top_tracks['items']):
         uri = item['uri']
@@ -109,6 +109,7 @@ print("LIST OF CHEERFUL SONGS")
 cheerful_songs = sorted(cheerful_songs, key=lambda k: k["danceability"])
 cheerful_songs.reverse()
 for item in cheerful_songs:
+    
     print(f"Song: {item['name']}, Artists: {[a['name'] for a in item['artists']]} , {item['danceability']} ")
 
 print("LIST OF DISGUST SONGS")

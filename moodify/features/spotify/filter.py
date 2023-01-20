@@ -24,6 +24,8 @@ sad_songs = []
 calm_songs = []
 high_energy_songs = []
 cheerful_songs = []
+disgust_songs = []
+neutral_songs = []
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scopes))
 
@@ -39,6 +41,8 @@ def retrieve_songs():
         valence = sp.audio_features(uri)[0]['valence']
         print(idx, item['uri'], item['name'], [a['name'] for a in item['artists']])
         
+        neutral_songs.append(item)
+
         if valence > 0.5:
             happy_songs.append(item)
             item.update({"valence" : valence})
@@ -58,12 +62,21 @@ def retrieve_songs():
         if danceability>0.7:
             cheerful_songs.append(item)
             item.update({"danceability" : danceability})
-
         
-
-
+        if danceability<0.3:
+            cheerful_songs.append(item)
+            item.update({"danceability" : danceability})
+        
+         
 
 retrieve_songs()
+
+
+
+print("LIST OF NEUTRAL SONGS")
+for item in neutral_songs:
+    print(f"Song: {item['name']}, Artists: {[a['name'] for a in item['artists']]} , {item['valence']} ")
+
 
 print("LIST OF HAPPY SONGS")
 happy_songs = sorted(happy_songs, key=lambda k: k["valence"])
@@ -96,6 +109,11 @@ print("LIST OF CHEERFUL SONGS")
 cheerful_songs = sorted(cheerful_songs, key=lambda k: k["danceability"])
 cheerful_songs.reverse()
 for item in cheerful_songs:
+    print(f"Song: {item['name']}, Artists: {[a['name'] for a in item['artists']]} , {item['danceability']} ")
+
+print("LIST OF DISGUST SONGS")
+cheerful_songs = sorted(cheerful_songs, key=lambda k: k["danceability"])
+for item in disgust_songs:
     print(f"Song: {item['name']}, Artists: {[a['name'] for a in item['artists']]} , {item['danceability']} ")
 
 
